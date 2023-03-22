@@ -40,14 +40,12 @@ class TimeToWordsConverter {
     }
 
     private String formatLowerEqualThirtyMinutes(final int hour, final int minute) {
-        String hourString = intConverter.asWords(hour);
-        String minuteString;
-        if (minute == 15)
-            minuteString = QUARTER;
-        else if (minute == 30)
-            minuteString = HALF;
-        else
-            minuteString = intConverter.asWords(minute);
+        final String hourString = intConverter.asWords(hour);
+        final String minuteString = switch (minute) {
+            case 15 -> QUARTER;
+            case 30 -> HALF;
+            default -> intConverter.asWords(minute);
+        };
         return String.format("%s %s %s", minuteString, PAST, hourString);
     }
 
