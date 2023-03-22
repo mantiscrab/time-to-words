@@ -32,11 +32,23 @@ class TimeToWordsApplicationTests {
     @Test
     void shouldConvertTimeToWords() {
         //when
-        final URI uri = uriProvider.getUriOn(on(TimeToWordsController.class).convertTimeToWords(LocalTime.of(15, 47)));
+        final URI uri = getConvertTimeToWordsUri(LocalTime.of(15, 47));
         final ResponseEntity<String> timeToWords = restTemplate.getForEntity(uri, String.class);
         //then
         Assertions.assertEquals(HttpStatus.OK, timeToWords.getStatusCode());
         Assertions.assertEquals("thirteen to sixteen", timeToWords.getBody());
     }
 
+    @Test
+    void shouldReturnBadRequestWhenTimeIsNull() {
+        //when
+        final URI uri = getConvertTimeToWordsUri(null);
+        final ResponseEntity<String> timeToWords = restTemplate.getForEntity(uri, String.class);
+        //then
+        Assertions.assertEquals(HttpStatus.BAD_REQUEST, timeToWords.getStatusCode());
+    }
+
+    private URI getConvertTimeToWordsUri(LocalTime time) {
+        return uriProvider.getUriOn(on(TimeToWordsController.class).convertTimeToWords(time));
+    }
 }

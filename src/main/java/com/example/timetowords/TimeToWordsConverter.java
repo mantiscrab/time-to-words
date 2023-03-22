@@ -17,18 +17,23 @@ class TimeToWordsConverter {
     private static final String TO = "to";
 
     public String convert(final LocalTime time) {
+        if (time == null)
+            throw new TimeMustNotBeNullException();
+        return timeToWords(time);
+    }
+
+    private String timeToWords(LocalTime time) {
         final int hour = time.getHour();
         final int minute = time.getMinute();
 
-        if (minute == 0) {
+        if (minute == 0)
             return formatPlainHour(hour);
-        } else if (minute <= 30) {
+        else if (minute <= 30)
             return formatLowerEqualThirtyMinutes(hour, minute);
-        } else if (minute < 35) {
+        else if (minute < 35)
             return formatLowerThirtyFiveMinutes(hour, minute);
-        } else {
+        else
             return formatBiggerEqualThirtyFiveMinutes(hour, minute);
-        }
     }
 
     private String formatPlainHour(final int hour) {
@@ -50,8 +55,9 @@ class TimeToWordsConverter {
     }
 
     private String formatLowerThirtyFiveMinutes(final int hour, final int minute) {
+        final String hourString = intConverter.asWords(hour);
         final String minuteString = intConverter.asWords(minute);
-        return String.format("%s %s", intConverter.asWords(hour), minuteString);
+        return String.format("%s %s", hourString, minuteString);
     }
 
     private String formatBiggerEqualThirtyFiveMinutes(final int hour, final int minute) {
