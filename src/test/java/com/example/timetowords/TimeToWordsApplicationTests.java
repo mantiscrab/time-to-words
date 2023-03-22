@@ -49,6 +49,6 @@ class TimeToWordsApplicationTests {
     }
 
     private URI getConvertTimeToWordsUri(LocalTime time) {
-        return uriProvider.getUriOn(on(TimeToWordsController.class).convertTimeToWords(time));
+        return uriProvider.getUriOn(on(TimeToWordsController.class).timeToWords(time));
     }
 }

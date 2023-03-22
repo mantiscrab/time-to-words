@@ -14,7 +14,7 @@ class TimeToWordsController {
     private final TimeToWordsConverter converter;
 
     @GetMapping("/convert")
-    ResponseEntity<String> convertTimeToWords(@RequestParam LocalTime time) {
+    ResponseEntity<String> timeToWords(@RequestParam LocalTime time) {
         return ResponseEntity.ok(converter.convert(time));
     }
 }
