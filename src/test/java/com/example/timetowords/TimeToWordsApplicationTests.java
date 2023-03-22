@@ -36,7 +36,7 @@ class TimeToWordsApplicationTests {
         final ResponseEntity<String> timeToWords = restTemplate.getForEntity(uri, String.class);
         //then
         Assertions.assertEquals(HttpStatus.OK, timeToWords.getStatusCode());
-        Assertions.assertEquals("thirteen to sixteen", timeToWords.getBody());
+        Assertions.assertEquals("thirteen to four", timeToWords.getBody());
     }
 
     @Test

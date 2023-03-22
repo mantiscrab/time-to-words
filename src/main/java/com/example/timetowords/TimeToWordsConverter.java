@@ -41,11 +41,11 @@ class TimeToWordsConverter {
             return NOON;
         if (hour == 0)
             return MIDNIGHT;
-        return String.format("%s %s", valueConverters.asWords(hour), O_CLOCK);
+        return String.format("%s %s", getTwelveHourBasedHour(hour), O_CLOCK);
     }
 
     private String formatLowerEqualThirtyMinutes(final int hour, final int minute) {
-        final String hourString = valueConverters.asWords(hour);
+        final String hourString = getTwelveHourBasedHour(hour);
         final String minuteString = switch (minute) {
             case 15 -> QUARTER;
             case 30 -> HALF;
@@ -55,15 +55,21 @@ class TimeToWordsConverter {
     }
 
     private String formatLowerThirtyFiveMinutes(final int hour, final int minute) {
-        final String hourString = valueConverters.asWords(hour);
+        final String hourString = getTwelveHourBasedHour(hour);
         final String minuteString = valueConverters.asWords(minute);
         return String.format("%s %s", hourString, minuteString);
     }
 
     private String formatBiggerEqualThirtyFiveMinutes(final int hour, final int minute) {
+        final String hourString = getTwelveHourBasedHour(hour + 1);
         final String minuteString = minute == 45 ? QUARTER : valueConverters.asWords(60 - minute);
-        final String hourString = valueConverters.asWords(hour + 1);
         return String.format("%s %s %s", minuteString, TO, hourString);
+    }
+
+    private String getTwelveHourBasedHour(final int hour) {
+        if (hour <= 12)
+            return valueConverters.asWords(hour);
+        return valueConverters.asWords(hour - 12);
     }
 }
 
