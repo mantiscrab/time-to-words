@@ -46,6 +46,7 @@ class TimeToWordsApplicationTests {
         final ResponseEntity<String> timeToWords = restTemplate.getForEntity(uri, String.class);
         //then
         Assertions.assertEquals(HttpStatus.BAD_REQUEST, timeToWords.getStatusCode());
+        Assertions.assertEquals("Bad request", timeToWords.getBody());
     }
 
     private URI getConvertTimeToWordsUri(LocalTime time) {

@@ -2,6 +2,7 @@ package com.example.timetowords;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
@@ -13,8 +14,8 @@ class TimeToWordsControllerAdvice {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
     }
 
-    @ExceptionHandler(MethodArgumentTypeMismatchException.class)
-    ResponseEntity<String> handleMethodArgumentNotValidException(MethodArgumentTypeMismatchException ex) {
+    @ExceptionHandler({MethodArgumentTypeMismatchException.class, MissingServletRequestParameterException.class})
+    ResponseEntity<String> handleMethodArgumentNotValidException() {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Bad request");
     }
 }
